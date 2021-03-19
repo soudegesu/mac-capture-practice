@@ -6,11 +6,30 @@
 //
 
 import SwiftUI
+import WebRTC
 
 struct ContentView: View {
+    
+  private var view: RTCMTLNSVideoView
+  private var capturer: ScreenCapturer
+    
+  init() {
+    self.view = RTCMTLNSVideoView()
+    self.capturer = ScreenCapturer(view: self.view)
+  }
+  
     var body: some View {
-        Text("Hello, World!")
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
+      VStack {
+        VideoView(view: view).frame(width: 300, height: 300)
+        HStack {
+          Button("Start", action: {
+            capturer.startScreencast()
+          })
+          Button("Stop", action: {
+            capturer.stopScreencast()
+          })
+        }
+      }
     }
 }
 
