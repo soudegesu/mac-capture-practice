@@ -1,6 +1,6 @@
 # mac-capture-practice
 
-## Prerequisist
+## Prerequisite
 
 - XCode 12.4
 
