@@ -18,6 +18,7 @@
 		9B84AAFA2604891B00E8CF37 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B84AAF22604891B00E8CF37 /* ContentView.swift */; };
 		9B84AB1F26048BC000E8CF37 /* VideoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B84AB1E26048BC000E8CF37 /* VideoView.swift */; };
 		9B84AB2426048C6500E8CF37 /* ScreenCapturer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B84AB2326048C6500E8CF37 /* ScreenCapturer.swift */; };
+		9BBBCE8726061ABA00775AD9 /* Renderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BBBCE8626061ABA00775AD9 /* Renderer.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,6 +62,7 @@
 		9B84AAF32604891B00E8CF37 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9B84AB1E26048BC000E8CF37 /* VideoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoView.swift; sourceTree = "<group>"; };
 		9B84AB2326048C6500E8CF37 /* ScreenCapturer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenCapturer.swift; sourceTree = "<group>"; };
+		9BBBCE8626061ABA00775AD9 /* Renderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Renderer.swift; sourceTree = "<group>"; };
 		A28A8154C23E8BBDACD3050D /* Pods-mac-capture-practiceTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-mac-capture-practiceTests.release.xcconfig"; path = "Target Support Files/Pods-mac-capture-practiceTests/Pods-mac-capture-practiceTests.release.xcconfig"; sourceTree = "<group>"; };
 		E806F937521C62D46232EC87 /* Pods-mac-capture-practice.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-mac-capture-practice.debug.xcconfig"; path = "Target Support Files/Pods-mac-capture-practice/Pods-mac-capture-practice.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -150,6 +152,7 @@
 				9B84AAEC2604891B00E8CF37 /* mac-capture-practice-Bridging-Header.h */,
 				9B84AB1E26048BC000E8CF37 /* VideoView.swift */,
 				9B84AB2326048C6500E8CF37 /* ScreenCapturer.swift */,
+				9BBBCE8626061ABA00775AD9 /* Renderer.swift */,
 			);
 			path = "mac-capture-practice";
 			sourceTree = "<group>";
@@ -413,6 +416,7 @@
 				9B84AB1F26048BC000E8CF37 /* VideoView.swift in Sources */,
 				9B84AB2426048C6500E8CF37 /* ScreenCapturer.swift in Sources */,
 				9B84AAFA2604891B00E8CF37 /* ContentView.swift in Sources */,
+				9BBBCE8726061ABA00775AD9 /* Renderer.swift in Sources */,
 				9B84AAF72604891B00E8CF37 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

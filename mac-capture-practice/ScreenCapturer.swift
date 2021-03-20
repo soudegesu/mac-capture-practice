@@ -6,18 +6,23 @@
 //
 
 import AVFoundation
-import Sora
-import WebRTC
+import MetalKit
 
-class ScreenCapturer: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate {
+class ScreenCapturer: NSObject {
   
-  private let view: RTCMTLNSVideoView
+  var texture: MTLTexture?
   private let session = AVCaptureSession()
-  private let output = AVCaptureVideoDataOutput()
+  private let output: AVCaptureVideoDataOutput
   private var callbackQueue: DispatchQueue!
+  private var textureCache : CVMetalTextureCache? = nil
+  private var commandQueue: MTLCommandQueue?
 
-  init(view: RTCMTLNSVideoView) {
-    self.view = view
+  init(device: MTLDevice) {
+    self.output = AVCaptureVideoDataOutput()
+    self.output.videoSettings = [
+      kCVPixelBufferPixelFormatTypeKey as String : kCVPixelFormatType_32BGRA,
+    ]
+    CVMetalTextureCacheCreate(kCFAllocatorDefault, nil, device, nil, &textureCache)
   }
   
   func startScreencast() {
@@ -30,7 +35,7 @@ class ScreenCapturer: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate {
       return
     }
 
-    input.minFrameDuration = CMTimeMake(value: 1, timescale: 30)
+    input.minFrameDuration = CMTimeMake(value: 1, timescale: 60)
 
     if session.canAddInput(input) {
       session.addInput(input)
@@ -48,27 +53,34 @@ class ScreenCapturer: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate {
     DispatchQueue.global(qos: .userInitiated).async {
       self.session.startRunning()
     }
-
   }
   
   func stopScreencast() {
     session.stopRunning()
   }
-  
+}
+
+extension ScreenCapturer: AVCaptureVideoDataOutputSampleBufferDelegate {
   // SampleBufferが更新された場合の処理
-  func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {   // ビデオフレームの生成
-    guard let videoFrame = VideoFrame(from: sampleBuffer) else {
-      debugPrint("VideoFrame is nil")
+  func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
+    guard let imageBuffer = CMSampleBufferGetImageBuffer(sampleBuffer),
+          let textureCache = self.textureCache else {
       return
     }
-    // ビデオフレームの描画
-    switch videoFrame {
-    case let .native(capturer: _, frame: frame):
-      view.renderFrame(frame)
-    }
     
-  }
-
-  func captureOutput(_ output: AVCaptureOutput, didDrop sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
+    var imageTexture: CVMetalTexture?
+    let status = CVMetalTextureCacheCreateTextureFromImage(
+                                            kCFAllocatorSystemDefault,
+                                            textureCache,
+                                            imageBuffer,
+                                            nil,
+                                            .bgra8Unorm,
+                                            CVPixelBufferGetWidth(imageBuffer),
+                                            CVPixelBufferGetHeight(imageBuffer),
+                                            0,
+                                            &imageTexture)
+    if status == kCVReturnSuccess {
+      self.texture = CVMetalTextureGetTexture(imageTexture!)
+    }
   }
 }

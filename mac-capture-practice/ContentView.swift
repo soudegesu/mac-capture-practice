@@ -7,30 +7,25 @@
 
 import SwiftUI
 import WebRTC
+import MetalKit
 
 struct ContentView: View {
     
-  private var view: RTCMTLNSVideoView
-  private var capturer: ScreenCapturer
-    
-  init() {
-    self.view = RTCMTLNSVideoView()
-    self.capturer = ScreenCapturer(view: self.view)
-  }
-  
-    var body: some View {
-      VStack {
-        VideoView(view: view).frame(width: 300, height: 300)
-        HStack {
-          Button("Start", action: {
-            capturer.startScreencast()
-          })
-          Button("Stop", action: {
-            capturer.stopScreencast()
-          })
-        }
+  @State private var isRecording: Bool = false
+      
+  var body: some View {
+    VStack {
+      VideoView(isRecording: $isRecording)
+      HStack {
+        Button("Start", action: {
+          isRecording = true
+        })
+        Button("Stop", action: {
+          isRecording = false
+        })
       }
     }
+  }
 }
 
 
