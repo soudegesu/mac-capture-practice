@@ -15,7 +15,6 @@ class ScreenCapturer: NSObject {
   private let output: AVCaptureVideoDataOutput
   private var callbackQueue: DispatchQueue!
   private var textureCache : CVMetalTextureCache? = nil
-  private var commandQueue: MTLCommandQueue?
 
   init(device: MTLDevice) {
     self.output = AVCaptureVideoDataOutput()
@@ -68,6 +67,10 @@ extension ScreenCapturer: AVCaptureVideoDataOutputSampleBufferDelegate {
       return
     }
     
+    guard output is AVCaptureVideoDataOutput else {
+      return
+    }
+        
     var imageTexture: CVMetalTexture?
     let status = CVMetalTextureCacheCreateTextureFromImage(
                                             kCFAllocatorSystemDefault,
@@ -82,5 +85,7 @@ extension ScreenCapturer: AVCaptureVideoDataOutputSampleBufferDelegate {
     if status == kCVReturnSuccess {
       self.texture = CVMetalTextureGetTexture(imageTexture!)
     }
+    
+    CVMetalTextureCacheFlush(textureCache, .zero)
   }
 }
