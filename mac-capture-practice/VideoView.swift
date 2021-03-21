@@ -9,9 +9,7 @@ import MetalKit
 
 struct VideoView: NSViewRepresentable {
   typealias NSViewType = MTKView
-    
-  @Binding var isRecording: Bool
-    
+        
   func makeNSView(context: Context) -> MTKView {
     debugPrint("VideoRendererView is created")
     // see: https://stackoverflow.com/questions/60737807/cametallayer-nextdrawable-returning-nil-because-allocation-failed
