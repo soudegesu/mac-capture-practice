@@ -8,7 +8,7 @@ import Foundation
 import MetalKit
 import AVFoundation
 
-class Renderer: NSObject, MTKViewDelegate {
+class Renderer: NSObject {
   
   private let parent: VideoView
   private var device: MTLDevice?
@@ -29,6 +29,9 @@ class Renderer: NSObject, MTKViewDelegate {
     self.capturer = capturer
     capturer.startScreencast()
   }
+}
+
+extension Renderer: MTKViewDelegate {
   
   func mtkView(_ view: MTKView, drawableSizeWillChange size: CGSize) {
     debugPrint(size)

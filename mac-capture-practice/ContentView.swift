@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import WebRTC
 import MetalKit
 
 struct ContentView: View {

@@ -5,7 +5,6 @@
 //  Created by Takaaki Suzuki on 2021/03/19.
 //
 import SwiftUI
-import WebRTC
 import MetalKit
 
 struct VideoView: NSViewRepresentable {
@@ -19,7 +18,6 @@ struct VideoView: NSViewRepresentable {
     let view = MTKView()
     view.framebufferOnly = false
     view.autoResizeDrawable = false
-    view.drawableSize = .init(width: 3584, height: 2240)
     view.clearColor = MTLClearColor(red: 1, green: 1, blue: 1, alpha: 1)
     
     if let device = MTLCreateSystemDefaultDevice() {
@@ -32,6 +30,7 @@ struct VideoView: NSViewRepresentable {
 
   func updateNSView(_ nsView: MTKView, context: Context) {
     debugPrint("VideoRendererView is updated")
+    nsView.drawableSize = .init(width: 3584, height: 2240)
   }
   
   func makeCoordinator() -> Renderer {

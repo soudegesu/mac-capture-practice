@@ -27,7 +27,7 @@ class ScreenCapturer: NSObject {
   
   func startScreencast() {
     
-    session.sessionPreset = AVCaptureSession.Preset.medium
+    session.sessionPreset = AVCaptureSession.Preset.high
 
     let displayId = CGDirectDisplayID(CGMainDisplayID())
 
